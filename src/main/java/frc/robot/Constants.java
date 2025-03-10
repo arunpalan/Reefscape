@@ -12,6 +12,10 @@ import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import com.revrobotics.spark.config.SparkBaseConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkFlexConfig;
+
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import frc.robot.generated.TunerConstants;
@@ -111,7 +115,12 @@ public final class Constants {
     }
 
     public static final class CoralIntakeConstants {
-      
+      public static final double MAX_INTAKE_VEL = 1.0;    // Maximum speed of intake, in %
+
+      public static final SparkBaseConfig INTAKE_CONFIG = new SparkFlexConfig()
+        .idleMode(IdleMode.kBrake)            // Apply brakes when not actively driven
+        .inverted(false)                      // Invert direction of motor rotation
+        .smartCurrentLimit(60);               // Current limit of motor, in amps
     }
 
     public static final class JoystickConstants {

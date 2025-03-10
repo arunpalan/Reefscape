@@ -19,10 +19,13 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.CoralIntake;
+import frc.robot.subsystems.BallIntake;
 // import frc.robot.command.AlignToAprilTag;
 
 import frc.robot.commands.*;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.CoralIntakeConstants;
 
 import frc.robot.util.Util;
 
@@ -40,6 +43,8 @@ public class RobotContainer {
     // Instantiate subsystems
     private final Elevator elevator = new Elevator();
     private final Climber climber = new Climber();
+    private final CoralIntake coral = new CoralIntake();
+    private final BallIntake ball = new BallIntake();
 
     private final Telemetry logger = new Telemetry(DriveConstants.MAX_SPEED);
 
@@ -97,6 +102,12 @@ public class RobotContainer {
         // NOTE: There is a clever way to do this with lambda expressions and a RepeatCommand class but choosing not to implement that because it's trickier
         // See: https://github.com/FRC7153/2025-Reefscape/blob/main/src/main/java/frc/robot/RobotContainer.java and https://github.com/FRC7153/2025-Reefscape/blob/main/src/main/java/frc/robot/commands/ManipulatorCommand.java
         climber.setDefaultCommand(new ClimberCommand(climber, operator));        
+
+        // Runs coral intake while left trigger is pressed
+        operator.leftTrigger().whileTrue(coral.setIntakeVelocity(CoralIntakeConstants.MAX_INTAKE_VEL));
+
+        // Runs coral intake in reverse while right trigger is pressed
+        operator.rightTrigger().whileTrue(coral.setIntakeVelocity(-CoralIntakeConstants.MAX_INTAKE_VEL));
     }
 
     public Command getAutonomousCommand() {
