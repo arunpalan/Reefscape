@@ -14,7 +14,9 @@ public final class Elevator implements Subsystem {
     public static record ElevatorState(double height, double angle) {}
     
     private final TalonFX elevatorMain = new TalonFX(HardwareConstants.ELEVATOR_LEADER_CAN, HardwareConstants.CANIVORE);
-    private final TalonFX elevatorFollower = new TalonFX(HardwareConstants.ELEVATOR_FOLLOWER_CAN, HardwareConstants.CANIVORE);
+
+    // If there is a follower motor:
+    // private final TalonFX elevatorFollower = new TalonFX(HardwareConstants.ELEVATOR_FOLLOWER_CAN, HardwareConstants.CANIVORE);
 
     private final MotionMagicVoltage elevatorPositionRequest = new MotionMagicVoltage(0.0)
         .withOverrideBrakeDurNeutral(true)      // Kill motor within control deadband
@@ -24,8 +26,8 @@ public final class Elevator implements Subsystem {
 
     public Elevator() {
         elevatorMain.getConfigurator().apply(ElevatorConstants.ELEVATOR_CONFIG);
-        elevatorFollower.getConfigurator().apply(ElevatorConstants.ELEVATOR_CONFIG);
-        elevatorFollower.setControl(new Follower(HardwareConstants.ELEVATOR_LEADER_CAN, false));
+        // elevatorFollower.getConfigurator().apply(ElevatorConstants.ELEVATOR_CONFIG);
+        // elevatorFollower.setControl(new Follower(HardwareConstants.ELEVATOR_LEADER_CAN, false));
           
         // Reset the elevator's encoders
         resetElevatorEncoder();

@@ -75,6 +75,41 @@ public final class Constants {
         public static final ElevatorState ALGAE_HIGH = new ElevatorState(1.65, 0.2);
     }
 
+    public static final class ClimberConstants {
+      public static final double CLIMBER_RATIO = 7.75;   // Gear ratio for climber
+      public static final double MAX_CLIMBER = 4.5;      // Maximum climber position, rotations
+      public static final double MIN_CLIMBER = 0.0;      // Minimum climber position, rotations
+
+      private static final MotionMagicConfigs CLIMBER_MM_CONFIGS = new MotionMagicConfigs()
+        .withMotionMagicCruiseVelocity(3.0)           // Maximum velocity for motor motion
+        .withMotionMagicAcceleration(5.5);            // Maximum acceleration for motor motion
+        
+      // NOTE: all following configs are probably not something you care about, if they cause issues stub 'em all out
+      private static final Slot0Configs CLIMBER_MOTOR_GAINS = new Slot0Configs()
+        .withKP(3.596).withKI(0.0).withKD(0.0)                                    // PID controller gains for climber motor
+        .withKS(0.1103).withKV(0.92196).withKA(0.0019)                            // Friction, velocity, and acceleration feedforward gains
+        .withKG(0.5609).withGravityType(GravityTypeValue.Climber_Static);        // Gravity compensation gains
+  
+      private static final CurrentLimitsConfigs CLIMBER_MOTOR_CURRENT = new CurrentLimitsConfigs()
+      .withSupplyCurrentLimit(50).withSupplyCurrentLimitEnable(true)          // Max allowable supply current
+      .withStatorCurrentLimit(70).withStatorCurrentLimitEnable(true);         // Max allowable stator current
+  
+      private static final FeedbackConfigs CLIMBER_ENCODER = new FeedbackConfigs()
+        .withSensorToMechanismRatio(CLIMBER_RATIO)                           // Sets ratio between encoder sensor and climber mechanism
+        .withFeedbackSensorSource(FeedbackSensorSourceValue.RotorSensor);     // Sets source of feedback
+  
+      private static final MotorOutputConfigs CLIMBER_OUTPUT = new MotorOutputConfigs()
+        .withInverted(InvertedValue.CounterClockwise_Positive)
+        .withNeutralMode(NeutralModeValue.Brake);
+  
+      public static final TalonFXConfiguration CLIMBER_CONFIG = new TalonFXConfiguration()
+        .withSlot0(CLIMBER_MOTOR_GAINS)
+        .withMotionMagic(CLIMBER_MM_CONFIGS)
+        .withCurrentLimits(CLIMBER_MOTOR_CURRENT)
+        .withFeedback(CLIMBER_ENCODER)
+        .withMotorOutput(CLIMBER_OUTPUT);
+    }
+
     public static final class JoystickConstants {
         public static final double DEADBAND = 0.1;      // Tune as needed
     }
@@ -104,8 +139,7 @@ public final class Constants {
         public static final int MANIPULATOR_PIVOT_CAN = 16;
     
         // Climber Hardware
-        public static final int CLIMBER_WINCH = 18;
-        public static final int CLIMBER_PIVOT = 17;
+        public static final int CLIMBER_CAN = 17;
     
         // Manipulator Hardware 
         public static final int MANIPULATOR_CAN = 19;

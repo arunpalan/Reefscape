@@ -20,6 +20,7 @@ public class DefaultElevatorCommand extends CommandBase {
 
     @Override
     public void execute() {
+        // Determine whether left joystick is positive or negative to raise or lower elevator
         double elevator_value = Util.applyDeadband(operator.getLeftX(), JoystickConstants.DEADBAND);
 
         if (elevator_value > 0.0) {
