@@ -110,6 +110,10 @@ public final class Constants {
         .withMotorOutput(CLIMBER_OUTPUT);
     }
 
+    public static final class CoralIntakeConstants {
+      
+    }
+
     public static final class JoystickConstants {
         public static final double DEADBAND = 0.1;      // Tune as needed
     }
@@ -142,7 +146,7 @@ public final class Constants {
         public static final int CLIMBER_CAN = 17;
     
         // Manipulator Hardware 
-        public static final int MANIPULATOR_CAN = 19;
+        public static final int CORAL_INTAKE_CAN = 19;
         public static final int MANIPULATOR_SENSORS_CAN = 20; // Spark Max, no motor
     
         // CAN Busses

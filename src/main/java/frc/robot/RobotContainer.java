@@ -18,9 +18,13 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Climber;
 // import frc.robot.command.AlignToAprilTag;
-import frc.robot.commands.DefaultElevatorCommand;
+
+import frc.robot.commands.*;
 import frc.robot.Constants.DriveConstants;
+
+import frc.robot.util.Util;
 
 public class RobotContainer {
 
@@ -35,6 +39,7 @@ public class RobotContainer {
 
     // Instantiate subsystems
     private final Elevator elevator = new Elevator();
+    private final Climber climber = new Climber();
 
     private final Telemetry logger = new Telemetry(DriveConstants.MAX_SPEED);
 
@@ -84,8 +89,14 @@ public class RobotContainer {
         drivetrain.registerTelemetry(logger::telemeterize);
 
         // Runs elevator to raise/lower or return to default state based on driver left joystick
-        elevator.setDefaultCommand(new DefaultElevatorCommand(elevator, driver));
+        // NOTE: There is a clever way to do this with lambda expressions and a RepeatCommand class but choosing not to implement that because it's trickier
+        // See: https://github.com/FRC7153/2025-Reefscape/blob/main/src/main/java/frc/robot/RobotContainer.java and https://github.com/FRC7153/2025-Reefscape/blob/main/src/main/java/frc/robot/commands/ManipulatorCommand.java
+        elevator.setDefaultCommand(new ElevatorCommand(elevator, operator));
 
+        // Runs climber to raise/lower or return to default state based on driver left joystick
+        // NOTE: There is a clever way to do this with lambda expressions and a RepeatCommand class but choosing not to implement that because it's trickier
+        // See: https://github.com/FRC7153/2025-Reefscape/blob/main/src/main/java/frc/robot/RobotContainer.java and https://github.com/FRC7153/2025-Reefscape/blob/main/src/main/java/frc/robot/commands/ManipulatorCommand.java
+        climber.setDefaultCommand(new ClimberCommand(climber, operator));        
     }
 
     public Command getAutonomousCommand() {

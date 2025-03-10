@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.util.Util;
 import frc.robot.Constants.JoystickConstants;
 
-public class DefaultElevatorCommand extends CommandBase {
+public class ElevatorCommand extends CommandBase {
     private final Elevator elevator;
     private final XboxController operator;
 
-    public DefaultElevatorCommand(Elevator elevator, XboxController operator) {
+    public ElevatorCommand(Elevator elevator, XboxController operator) {
         this.elevator = elevator;
         this.operator = operator;
         addRequirements(elevator);
