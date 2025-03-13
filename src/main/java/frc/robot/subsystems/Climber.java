@@ -6,12 +6,12 @@ import com.ctre.phoenix6.controls.StaticBrake;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.HardwareConstants;
 
 // NOTE: all this is copy-paste from the Elevator subsystem because I'm assuming its the same kind of motor. If this assumption is poor we might have to redo this
-public final class Climber implements Subsystem {
+public final class Climber extends SubsystemBase {
     public static record ClimberState(double height, double angle) {}
     
     private final TalonFX climberMain = new TalonFX(HardwareConstants.CLIMBER_CAN);

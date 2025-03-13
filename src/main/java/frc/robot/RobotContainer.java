@@ -108,8 +108,18 @@ public class RobotContainer {
         // See: https://github.com/FRC7153/2025-Reefscape/blob/main/src/main/java/frc/robot/RobotContainer.java and https://github.com/FRC7153/2025-Reefscape/blob/main/src/main/java/frc/robot/commands/ManipulatorCommand.java
         climber.setDefaultCommand(new ClimberCommand(climber, operator));        
 
-        operator.leftTrigger().whileTrue(new SetIntakeVelocity(coral, CoralIntakeConstants.MAX_INTAKE_VEL));
-        operator.rightTrigger().whileTrue(new SetIntakeVelocity(coral, -CoralIntakeConstants.MAX_INTAKE_VEL));
+        operator.leftTrigger().whileTrue(
+            Commands.run(
+                () ->
+                    coral.setIntakeVelocity(CoralIntakeConstants.MAX_INTAKE_VEL),
+                coral));
+
+        operator.rightTrigger().whileTrue(
+            Commands.run(
+                () ->
+                    coral.setIntakeVelocity(-CoralIntakeConstants.MAX_INTAKE_VEL),
+                coral));
+
     }
 
     public Command getAutonomousCommand() {

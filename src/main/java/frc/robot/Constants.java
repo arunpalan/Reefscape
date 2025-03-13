@@ -5,6 +5,7 @@ import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
@@ -52,13 +53,20 @@ public final class Constants {
 /* ----- CORAL INTAKE ----- */
   public static final class CoralIntakeConstants {
     public static final double MAX_INTAKE_VEL = 1.0;                       // Maximum speed of coral intake, in rotations per second
+    
+    private static final Slot0Configs CORAL_GAINS = new Slot0Configs()
+        .withKP(0.11)
+        .withKI(0.48)
+        .withKD(0.01)
+        .withKV(0.12);
 
     private static final MotorOutputConfigs CORAL_OUTPUT = new MotorOutputConfigs()
         .withInverted(InvertedValue.CounterClockwise_Positive)              // Defines positive spin direction of motor
         .withNeutralMode(NeutralModeValue.Brake);                           // Apply brakes when not actively driven
 
-    public static final TalonFXConfiguration CORAL_CONFIG = new TalonFXConfiguration();
-     //   .withMotorOutput(CORAL_OUTPUT);
+    public static final TalonFXConfiguration CORAL_CONFIG = new TalonFXConfiguration()
+        .withSlot0(CORAL_GAINS)
+        .withMotorOutput(CORAL_OUTPUT);
   }
 
 /* ----- ELEVATOR ----- */
@@ -111,10 +119,6 @@ public final class Constants {
     // Manipulator Hardware
     public static final int CORAL_INTAKE_CAN = 31;
     public static final int MANIPULATOR_SENSORS_CAN = 8; // Spark Max, no motor
-
-    // CAN Busses
-    public static final CANBus RIO_CAN = new CANBus("rio");
-    public static final CANBus CANIVORE = new CANBus("CANivore");
 
   }
 
